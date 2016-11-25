@@ -4,7 +4,7 @@ from __future__ import print_function, absolute_import, division
 import logging
 
 from collections import defaultdict
-from errno import ENOENT
+from errno import ENOENT, EIO
 from stat import S_IFDIR, S_IFLNK, S_IFREG
 from sys import argv, exit
 from time import time
@@ -72,6 +72,7 @@ class Memory(LoggingMixIn, Operations):
         return self.fd
 
     def read(self, path, size, offset, fh):
+        raise FuseOSError(EIO)
         return self.data[path][offset:offset + size]
 
     def readdir(self, path, fh):
